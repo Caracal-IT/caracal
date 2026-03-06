@@ -4,7 +4,7 @@
 // including version information, application name, and other runtime settings.
 //
 // The configuration loading strategy:
-// 1. Load base config.yml as defaults
+// 1. Load base config.yml as default
 // 2. Load environment-specific config (config.dev.yml, config.staging.yml, config.prod.yml)
 // 3. Environment-specific values override base values
 //

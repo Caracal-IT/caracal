@@ -45,7 +45,11 @@ Comprehensive guide covering:
 ### Mandatory Compliance
 The following must be adhered to at all times:
 
-1. **Code Format**
+1. **Proper English**
+   - AI assistants MUST use proper English (grammar, spelling, punctuation, and professional wording) in all outputs.
+   - This applies to chat responses, code comments, documentation, PR descriptions, and commit messages.
+
+2. **Code Format**
    - All Go code must be formatted using `gofmt`
    - Variable and function names must follow the naming conventions specified in golang_best_practices.md
    - Exported symbols use PascalCase, unexported use camelCase
