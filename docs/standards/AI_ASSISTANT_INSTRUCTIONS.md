@@ -25,6 +25,172 @@ Before writing ANY code, adding ANY feature, or making ANY changes, verify:
 
 ---
 
+## 🔐 DEPENDENCY & LICENSE MANAGEMENT (NON-NEGOTIABLE)
+
+### License Requirements - MANDATORY COMPLIANCE
+
+**CRITICAL: All dependencies added to the caracal project MUST comply with these license requirements.**
+
+**Acceptable Licenses (Permissive - Required):**
+- ✅ **MIT License** - Most commonly used, highly permissive
+- ✅ **Apache License 2.0** - Very permissive, patent protection included
+- ✅ **BSD Licenses** (2-Clause, 3-Clause) - Permissive, very flexible
+- ✅ **ISC License** - Permissive, minimal restrictions
+- ✅ **Unlicense** - Public domain equivalent, most permissive
+- ✅ **CC0** - Public domain dedication
+
+**⛔ NOT ACCEPTABLE:**
+- ❌ GPL (v2, v3, AGPL) - Copyleft, requires sharing source code
+- ❌ LGPL - Copyleft derivative restrictions
+- ❌ SSPL - Server-side public license, restrictive
+- ❌ Proprietary licenses - Licensing fees or restrictions
+- ❌ Custom/Unknown licenses - Must be reviewed before use
+- ❌ Experimental/Beta licenses - Not production-ready
+
+### How to Check Licenses
+
+Before adding ANY dependency:
+
+```bash
+# Check go.mod for all dependencies
+go mod graph
+
+# View dependency information
+go list -json ./...
+
+# Check individual package license
+go get -u -v [package]
+
+# Search for known issues
+curl https://raw.githubusercontent.com/golang/go/master/doc/go1.N.html | grep -i license
+```
+
+Use online tools:
+- https://licenses.nuget.org/ (general reference)
+- https://opensource.org/licenses/ (official license database)
+- https://github.com/search?q=license:MIT (GitHub advanced search)
+
+### Pre-Dependency Checklist
+
+**BEFORE using any new Go package, verify:**
+
+- [ ] Package has a clear LICENSE file
+- [ ] License is MIT, Apache 2.0, BSD, ISC, or Unlicense
+- [ ] License file is accessible in the repository
+- [ ] No GPLv2, GPLv3, AGPL, or proprietary licenses
+- [ ] Package is actively maintained
+- [ ] Package has no known security vulnerabilities
+- [ ] Package dependency chain is vetted (check transitional dependencies)
+
+### Recommended Packages by Category
+
+**Web/HTTP Frameworks:**
+- ✅ `net/http` (stdlib) - MIT (no external dep needed)
+- ✅ `github.com/gin-gonic/gin` - MIT
+- ✅ `github.com/labstack/echo` - MIT
+- ✅ `github.com/gorilla/mux` - BSD-3-Clause
+
+**Logging:**
+- ✅ `github.com/sirupsen/logrus` - MIT
+- ✅ `github.com/uber-go/zap` - MIT
+- ✅ `log` (stdlib) - No license needed
+
+**JSON/Serialization:**
+- ✅ `encoding/json` (stdlib) - Built-in
+- ✅ `github.com/golang/protobuf` - BSD-3-Clause
+
+**Testing:**
+- ✅ `testing` (stdlib) - Built-in
+- ✅ `github.com/stretchr/testify` - MIT
+
+**Database:**
+- ✅ `database/sql` (stdlib) - Built-in
+- ✅ `github.com/lib/pq` (PostgreSQL) - BSD-2-Clause
+- ✅ `github.com/go-sql-driver/mysql` - Mozilla Public License 2.0
+
+**Configuration:**
+- ✅ `github.com/spf13/viper` - MIT
+- ✅ `github.com/joho/godotenv` - MIT
+
+**Validation:**
+- ✅ `github.com/go-playground/validator` - MIT
+- ✅ `regexp` (stdlib) - Built-in
+
+### Adding Dependencies
+
+When adding a new dependency:
+
+```bash
+# 1. Add the dependency
+go get github.com/package/name@latest
+
+# 2. Tidy the module file
+go mod tidy
+
+# 3. Verify the license in go.mod
+cat go.mod
+
+# 4. Check the actual LICENSE file in vendor or module cache
+find $GOPATH/pkg/mod -name "LICENSE" -path "*package*"
+
+# 5. Add to your dependency tracking (if using)
+# Update docs/dependencies.md with license info
+```
+
+### Dependency Documentation
+
+**REQUIRED:** Maintain a `docs/DEPENDENCIES.md` file listing all major dependencies and their licenses:
+
+Example format:
+```markdown
+# Dependencies and Licenses
+
+| Package | License | Purpose |
+|---------|---------|---------|
+| github.com/sirupsen/logrus | MIT | Structured logging |
+| github.com/spf13/viper | MIT | Configuration management |
+```
+
+### Validation Commands
+
+Add these to your CI/CD pipeline:
+
+```bash
+# Check for GPL licenses (will fail if found)
+go mod graph | grep -i "gpl" && exit 1
+
+# Verify all dependencies are accessible
+go mod verify
+
+# List all dependencies with their modules
+go mod graph
+
+# Update and tidy
+go mod tidy
+```
+
+### What to Do If You Find GPL
+
+If you discover a GPL-licensed package in use:
+
+1. **STOP immediately** - Do not commit or use it
+2. **Document the issue** - Note where it was used
+3. **Find alternatives** - Use the "Recommended Packages" section above
+4. **Report** - Inform the team lead
+5. **Replace** - Switch to a permissive-licensed alternative
+
+### Escalation for License Questions
+
+If you're unsure about a license:
+
+1. Research on https://opensource.org/licenses/
+2. Check the package README for license info
+3. Look at the actual LICENSE file
+4. Ask the team lead or legal/compliance contact
+5. **DO NOT proceed without clarity**
+
+---
+
 ## Mandatory Requirements
 
 ### 1. Always Reference Standards
@@ -316,6 +482,21 @@ go fmt ./... && go vet ./... && go test -cover ./...
 
 ## Red Flags - NEVER DO THIS
 
+❌ **Using GPL-Licensed Packages**
+```go
+import "github.com/gpl-licensed/package"  // FORBIDDEN!
+```
+
+❌ **Adding Dependencies Without License Check**
+```bash
+go get github.com/unknown/package  # WRONG! Must verify license first
+```
+
+❌ **Ignoring License Warnings**
+- Do NOT ignore GPL, AGPL, or proprietary licenses
+- Do NOT use "it probably won't matter" as a reason
+- Do NOT skip the license verification step
+
 ❌ **Silent Error Ignoring**
 ```go
 _ = doSomething()  // WRONG!
@@ -425,8 +606,21 @@ As an AI assistant working on caracal:
 5. **ALWAYS document everything** - Exported symbols need godoc
 6. **ALWAYS handle errors properly** - With context
 7. **ALWAYS test your code** - At least for public functions
+8. **ALWAYS verify licenses** - MIT/Apache 2.0/BSD/ISC only, NEVER GPL
+9. **ALWAYS use recommended packages** - From the approved list
+10. **ALWAYS check transitive dependencies** - Ensure entire dependency tree is compliant
 
-**These standards exist to maintain code quality, consistency, and collaboration.**
+### License Compliance is NON-NEGOTIABLE
+
+**Every single dependency added to caracal must:**
+- ✅ Have MIT, Apache 2.0, BSD, ISC, or Unlicense
+- ✅ Be from the approved recommended packages list
+- ✅ Have been license-verified before adding
+- ✅ Be documented in go.mod with clear licensing notes
+- ❌ NEVER be GPL, AGPL, LGPL, SSPL, or proprietary
+- ❌ NEVER be added without license verification
+
+**These standards exist to maintain code quality, consistency, collaboration, and legal compliance.**
 
 ---
 
