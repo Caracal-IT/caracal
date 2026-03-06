@@ -224,11 +224,12 @@ go mod graph | grep -i "gpl"
 Every significant dependency must be documented in `docs/DEPENDENCIES.md`:
 
 ```markdown
-| Package | Version | License | Purpose | Added | Notes |
-|---------|---------|---------|---------|-------|-------|
-| github.com/sirupsen/logrus | v1.9.0 | MIT | Logging | 2024-01 | Actively maintained |
-| github.com/spf13/viper | v1.15.0 | MIT | Config | 2024-01 | Recommended by Go community |
+| Package                    | Version | License | Purpose | Added   | Notes                       |
+|----------------------------|---------|---------|---------|---------|-----------------------------|
+| github.com/sirupsen/logrus | v1.9.0  | MIT     | Logging | 2024-01 | Actively maintained         |
+| github.com/spf13/viper     | v1.15.0 | MIT     | Config  | 2024-01 | Recommended by Go community |
 ```
+
 
 ---
 
