@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"caracal/config"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	cfg := config.Load()
+	fmt.Println(cfg.GetAppInfo())
+	fmt.Println(cfg.App.Environment)
 }

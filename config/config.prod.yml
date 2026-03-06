@@ -2,7 +2,4 @@
 # Production-ready settings
 
 app:
-  name: caracal
-  version: 0.1.0
-  description: "Caracal - A high-performance Go application"
   environment: production

@@ -12,5 +12,5 @@ app:
   # Application description
   description: "Caracal - A high-performance Go application"
 
-  # Application environment (development, staging, production)
-  environment: development
+  # Application environment (none, dev, staging, prod)
+  environment: none
