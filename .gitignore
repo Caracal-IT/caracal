@@ -1,0 +1,80 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+*.cover
+
+# Go workspace file
+go.work
+
+# Dependency directories
+vendor/
+
+# Go mod cache
+go.sum.lock
+
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+
+# Build directories
+bin/
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+.env
+.env.local
+
+# OS-specific files
+Thumbs.db
+.DS_Store
+
+# IDE-specific directories
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.idea_modules/
+
+# IntelliJ
+out/
+
+# Jetbrains IDEs
+*.iml
+
+# Goland IDE
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Air - Live reload for Go
+tmp/
+
+# Delve Debugger
+.dlv/
+
+# Local development files
+*.local
+local/
+
