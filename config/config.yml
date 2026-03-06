@@ -1,0 +1,16 @@
+# Caracal Application Configuration
+# This is the main configuration file for the caracal application
+
+# Application Settings
+app:
+  # Application name
+  name: caracal
+
+  # Application version (semver format)
+  version: 0.1.0
+
+  # Application description
+  description: "Caracal - A high-performance Go application"
+
+  # Application environment (development, staging, production)
+  environment: development

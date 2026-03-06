@@ -39,8 +39,20 @@ build/
 # Temporary files
 *.tmp
 *.temp
+
+# Environment and Configuration Files
 .env
 .env.local
+.env.*.local
+.env.production
+config/.env
+config/config.local.yml
+config/config.local.*.yml
+
+# Application Logs
+logs/
+*.log
+log/
 
 # OS-specific files
 Thumbs.db

@@ -1,0 +1,8 @@
+# Caracal Development Environment Configuration
+# Local development settings
+
+app:
+  name: caracal
+  version: 0.1.0
+  description: "Caracal - A high-performance Go application"
+  environment: development

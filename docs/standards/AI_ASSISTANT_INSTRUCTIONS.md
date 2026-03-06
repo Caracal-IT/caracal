@@ -16,18 +16,138 @@
 
 Before writing ANY code, adding ANY feature, or making ANY changes, verify:
 
+### Standard Documentation (Required Reading)
 - [ ] I have read `docs/standards/README.md`
 - [ ] I have read `docs/standards/AI_ASSISTANT_INSTRUCTIONS.md` (this file)
 - [ ] I have read `docs/standards/golang_best_practices.md`
+- [ ] I have read `docs/standards/LICENSES.md`
+- [ ] I have read `docs/standards/LICENSE_QUICK_REFERENCE.md`
+
+### All Relevant Documentation Files
+**CRITICAL:** Before starting work, read ALL .md files in the relevant docs folder:
+- [ ] If working on **config**: Read all .md files in `docs/standards/` and `config/README.md`
+- [ ] If working on **database**: Read all .md files in `docs/standards/` and relevant feature docs
+- [ ] If working on **API**: Read all .md files in `docs/standards/` and relevant feature docs
+- [ ] If working on **deployment**: Read all .md files in `docs/standards/` and deployment docs
+- [ ] If working on **other features**: Read all .md files in `docs/standards/` and feature-specific docs
+
+### Compliance Verification
 - [ ] I understand all mandatory compliance requirements
 - [ ] I am prepared to follow Go best practices
+- [ ] I have verified license requirements for any dependencies
 - [ ] I will validate all changes before submission
 
 ---
 
-## 🔐 DEPENDENCY & LICENSE MANAGEMENT (NON-NEGOTIABLE)
+## 📚 DOCUMENTATION READING REQUIREMENT
 
-### License Requirements - MANDATORY COMPLIANCE
+### ALL .md Files Must Be Read
+
+**Before starting ANY work on the caracal project, AI assistants MUST read ALL .md files in the relevant documentation folders.**
+
+### How to Find and Read All .md Files
+
+**Step 1: Identify the relevant folder based on your task:**
+```
+docs/
+├── standards/          ← Core standards (ALWAYS read first)
+│   ├── README.md
+│   ├── AI_ASSISTANT_INSTRUCTIONS.md
+│   ├── LICENSES.md
+│   ├── LICENSE_QUICK_REFERENCE.md
+│   ├── COPILOT_COMPLIANCE_CHECKLIST.md
+│   └── golang_best_practices.md
+│
+├── config/            ← Config-specific docs (read if working on config)
+│   └── README.md
+│
+├── api/               ← API docs (read if working on API)
+│   └── *.md files
+│
+├── database/          ← Database docs (read if working on database)
+│   └── *.md files
+│
+└── deployment/        ← Deployment docs (read if working on deployment)
+    └── *.md files
+```
+
+**Step 2: Read ALL .md files in EVERY relevant folder:**
+- Always start with `docs/standards/` (mandatory for all tasks)
+- Then read all .md files in the feature-specific folder (if applicable)
+- Then read all .md files in any related folders
+
+**Step 3: Document which files you read:**
+- Include in your response: "📚 Documentation Read: [file1.md, file2.md, ...]"
+- Show you've read the relevant context
+- Reference specific sections when applicable
+
+### Documentation Files by Feature Area
+
+**🔧 Configuration Work:**
+- `docs/standards/README.md` ✅ REQUIRED
+- `docs/standards/AI_ASSISTANT_INSTRUCTIONS.md` ✅ REQUIRED
+- `docs/standards/LICENSES.md` ✅ REQUIRED
+- `docs/standards/golang_best_practices.md` ✅ REQUIRED
+- `config/README.md` ✅ REQUIRED (if modifying config)
+
+**🔒 Security/License Work:**
+- `docs/standards/README.md` ✅ REQUIRED
+- `docs/standards/LICENSES.md` ✅ REQUIRED
+- `docs/standards/LICENSE_QUICK_REFERENCE.md` ✅ REQUIRED
+- `docs/standards/AI_ASSISTANT_INSTRUCTIONS.md` ✅ REQUIRED
+
+**💻 Code/Feature Work:**
+- `docs/standards/README.md` ✅ REQUIRED
+- `docs/standards/AI_ASSISTANT_INSTRUCTIONS.md` ✅ REQUIRED
+- `docs/standards/golang_best_practices.md` ✅ REQUIRED
+- `docs/standards/LICENSES.md` ✅ REQUIRED (for dependencies)
+- `[feature-specific]/README.md` ✅ REQUIRED (if available)
+
+**📊 Database Work:**
+- All files in `docs/standards/` ✅ REQUIRED
+- `docs/database/*.md` ✅ REQUIRED (if available)
+
+**🚀 Deployment/DevOps Work:**
+- All files in `docs/standards/` ✅ REQUIRED
+- `docs/deployment/*.md` ✅ REQUIRED (if available)
+
+### Response Format with Documentation
+
+Always include in your response:
+
+```markdown
+📚 DOCUMENTATION READ
+- docs/standards/README.md ✅
+- docs/standards/AI_ASSISTANT_INSTRUCTIONS.md ✅
+- docs/standards/LICENSES.md ✅
+- docs/standards/golang_best_practices.md ✅
+- config/README.md ✅ (if applicable)
+
+[Your response content here]
+```
+
+### What Happens If You Don't Read All .md Files
+
+- ❌ Missing context about standards and best practices
+- ❌ Potential license compliance violations
+- ❌ Code quality issues
+- ❌ Inconsistent with project guidelines
+- ❌ **NOT ACCEPTABLE** - This is mandatory
+
+### Finding All .md Files in a Folder
+
+Use this command to find all .md files:
+```bash
+find docs/standards -name "*.md" -type f | sort
+find docs/config -name "*.md" -type f | sort
+find docs/[feature] -name "*.md" -type f | sort
+```
+
+---
+
+## Mandatory Requirements
+
+### 1. Always Reference Standards
 
 **CRITICAL: All dependencies added to the caracal project MUST comply with these license requirements.**
 

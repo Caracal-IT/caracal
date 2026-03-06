@@ -1,11 +1,10 @@
 package config
 
 import (
-	"strings"
 	"testing"
 )
 
-// TestLoad verifies that the Load function returns a valid Config.
+// TestLoad verifies that the Load function returns a valid Config with AppConfig.
 func TestLoad(t *testing.T) {
 	cfg := Load()
 
@@ -13,20 +12,15 @@ func TestLoad(t *testing.T) {
 		t.Fatal("Load() returned nil config")
 	}
 
-	if cfg.AppName != "caracal" {
-		t.Errorf("Load() AppName = %v, want %v", cfg.AppName, "caracal")
+	// Test App configuration
+	if cfg.App.Name != "caracal" {
+		t.Errorf("App.Name = %v, want %v", cfg.App.Name, "caracal")
 	}
-
-	if cfg.Version != "0.1.0" {
-		t.Errorf("Load() Version = %v, want %v", cfg.Version, "0.1.0")
+	if cfg.App.Version != "0.1.0" {
+		t.Errorf("App.Version = %v, want %v", cfg.App.Version, "0.1.0")
 	}
-
-	if cfg.Environment != "development" {
-		t.Errorf("Load() Environment = %v, want %v", cfg.Environment, "development")
-	}
-
-	if cfg.LogLevel != "info" {
-		t.Errorf("Load() LogLevel = %v, want %v", cfg.LogLevel, "info")
+	if cfg.App.Environment != "development" {
+		t.Errorf("App.Environment = %v, want %v", cfg.App.Environment, "development")
 	}
 }
 
@@ -40,16 +34,20 @@ func TestGetAppInfo(t *testing.T) {
 		{
 			name: "default config",
 			cfg: &Config{
-				AppName: "caracal",
-				Version: "0.1.0",
+				App: AppConfig{
+					Name:    "caracal",
+					Version: "0.1.0",
+				},
 			},
 			wantStr: "caracal v0.1.0",
 		},
 		{
 			name: "custom version",
 			cfg: &Config{
-				AppName: "caracal",
-				Version: "1.0.0",
+				App: AppConfig{
+					Name:    "caracal",
+					Version: "1.0.0",
+				},
 			},
 			wantStr: "caracal v1.0.0",
 		},
@@ -58,8 +56,8 @@ func TestGetAppInfo(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := tt.cfg.GetAppInfo()
-			if !strings.Contains(got, tt.wantStr) {
-				t.Errorf("GetAppInfo() = %v, want substring %v", got, tt.wantStr)
+			if got != tt.wantStr {
+				t.Errorf("GetAppInfo() = %v, want %v", got, tt.wantStr)
 			}
 		})
 	}

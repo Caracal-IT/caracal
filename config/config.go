@@ -6,36 +6,36 @@
 // Example usage:
 //
 //	cfg := config.Load()
-//	fmt.Printf("Running %s v%s\n", cfg.AppName, cfg.Version)
+//	fmt.Printf("Running %s v%s\n", cfg.App.Name, cfg.App.Version)
 package config
 
 // Config holds all application configuration settings.
 type Config struct {
-	// AppName is the name of the application.
-	AppName string
+	App AppConfig `yaml:"app"`
+}
 
-	// Version is the application version.
-	Version string
-
-	// Environment specifies the runtime environment (development, staging, production).
-	Environment string
-
-	// LogLevel specifies the logging level (debug, info, warn, error).
-	LogLevel string
+// AppConfig holds application metadata and settings.
+type AppConfig struct {
+	Name        string `yaml:"name"`
+	Version     string `yaml:"version"`
+	Description string `yaml:"description"`
+	Environment string `yaml:"environment"`
 }
 
 // Load returns a Config struct with all application settings.
 // This function loads configuration from environment variables or default values.
 func Load() *Config {
 	return &Config{
-		AppName:     "caracal",
-		Version:     "0.1.0",
-		Environment: "development",
-		LogLevel:    "info",
+		App: AppConfig{
+			Name:        "caracal",
+			Version:     "0.1.0",
+			Description: "Caracal - A high-performance Go application",
+			Environment: "development",
+		},
 	}
 }
 
-// GetAppInfo returns a formatted string with application name and version.
+// GetAppInfo returns a formatted string with the application name and version.
 func (c *Config) GetAppInfo() string {
-	return c.AppName + " v" + c.Version
+	return c.App.Name + " v" + c.App.Version
 }
