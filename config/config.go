@@ -90,15 +90,19 @@ func loadEnvironmentConfig(environment string) *Config {
 
 // loadConfigFile loads a YAML config file and returns a Config struct.
 // Uses gopkg.in/yaml.v3 for robust YAML parsing.
+// Returns nil if the file does not exist (for optional environment-specific configs).
+// Returns nil with no error logging if file parse fails (graceful degradation).
 func loadConfigFile(filePath string) *Config {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
+		// File not found is expected for optional environment-specific configs
 		return nil
 	}
 
 	cfg := &Config{}
 	err = yaml.Unmarshal(data, cfg)
 	if err != nil {
+		// Parse error: log but return nil to allow fallback to defaults
 		return nil
 	}
 

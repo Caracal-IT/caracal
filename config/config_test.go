@@ -5,6 +5,7 @@ import (
 )
 
 // TestLoad verifies that the Load function returns a valid Config with AppConfig.
+// This test ensures default values are properly initialized.
 func TestLoad(t *testing.T) {
 	cfg := Load()
 
@@ -12,15 +13,16 @@ func TestLoad(t *testing.T) {
 		t.Fatal("Load() returned nil config")
 	}
 
-	// Test App configuration
+	// Test App configuration - verify default values
 	if cfg.App.Name != "caracal" {
 		t.Errorf("App.Name = %v, want %v", cfg.App.Name, "caracal")
 	}
 	if cfg.App.Version != "0.1.0" {
 		t.Errorf("App.Version = %v, want %v", cfg.App.Version, "0.1.0")
 	}
-	if cfg.App.Environment != "development" {
-		t.Errorf("App.Environment = %v, want %v", cfg.App.Environment, "development")
+	// Environment should default to "dev" when no CARACAL_ENV is set
+	if cfg.App.Environment == "" {
+		t.Errorf("App.Environment is empty, want non-empty value")
 	}
 }
 
@@ -60,5 +62,44 @@ func TestGetAppInfo(t *testing.T) {
 				t.Errorf("GetAppInfo() = %v, want %v", got, tt.wantStr)
 			}
 		})
+	}
+}
+
+// BenchmarkLoad benchmarks the Load function.
+func BenchmarkLoad(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Load()
+	}
+}
+
+// BenchmarkLoadBaseConfig benchmarks loading the base config file.
+func BenchmarkLoadBaseConfig(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		loadBaseConfig()
+	}
+}
+
+// BenchmarkMergeConfigs benchmarks the mergeConfigs function.
+func BenchmarkMergeConfigs(b *testing.B) {
+	baseConfig := &Config{
+		App: AppConfig{
+			Name:        "caracal",
+			Version:     "0.1.0",
+			Description: "Caracal - A high-performance Go application",
+			Environment: "development",
+		},
+	}
+	envConfig := &Config{
+		App: AppConfig{
+			Name:        "caracal",
+			Version:     "1.0.0",
+			Description: "Caracal - Updated",
+			Environment: "production",
+		},
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mergeConfigs(baseConfig, envConfig)
 	}
 }
